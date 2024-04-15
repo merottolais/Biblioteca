@@ -11,8 +11,12 @@ class GenericService<T> {
     return repository.getAll();
   }
 
-  T get(int id) {
-    return repository.get(id);
+  T? get(int id) {
+    try {
+      return repository.get(id);
+    } catch (e) {
+      return null;
+    }
   }
 
   void add(T item) {
