@@ -1,5 +1,6 @@
 import '../../model/user.dart';
-import '../../repository/generic_repository.dart';
+import '../../register.dart';
+import '../generic_service.dart';
 import 'token.dart';
 
 class AuthService {
@@ -9,7 +10,7 @@ class AuthService {
     token = Token();
   }
 
-  login(String email, String password) {
+  String login(String email, String password) {
     User? user = _getUserByEmail(email);
 
     if (user == null) {
@@ -24,8 +25,7 @@ class AuthService {
   }
 
   User? _getUserByEmail(String email) {
-    GenericRepository<User> repository = GenericRepository<User>();
-    List<User> users = repository.getAll();
+    List<User> users = service<GenericService<User>>().getAll();
     return users.singleWhere((element) => element.email == email);
   }
 }

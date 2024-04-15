@@ -1,20 +1,15 @@
 import 'package:shelf_plus/shelf_plus.dart';
 import 'package:shelf_multipart/form_data.dart';
 import '../midleware/protected_endpoint.dart';
-import '../service/auth/auth_service.dart';
+import '../register.dart';
 import '../service/generic_service.dart';
 import '../midleware/deserialization_resolver.dart';
 
 class GenericController<T> extends ProtectedEndpoint {
   String domain;
   RouterPlus router;
-  late GenericService<T> service;
-  late AuthService authService;
 
   GenericController({required this.domain, required this.router}) {
-    service = GenericService<T>();
-    authService = AuthService();
-
     router.get('/$domain', getAll);
     router.get('/$domain/<id>', get);
     router.post('/$domain', add);
@@ -22,23 +17,24 @@ class GenericController<T> extends ProtectedEndpoint {
     router.delete('/$domain/<id>', remove);
   }
 
-  Future<Map<String, dynamic>> getAll(Request request) async {
+  Map<String, dynamic> getAll(Request request) {
     try {
       isAuthorized(request);
     } catch (e) {
       return {'error': e.toString()};
     }
-    var items = await service.getAll();
+
+    var items = service<GenericService<T>>().getAll();
     return {'items': items};
   }
 
-  Future<Map<String, dynamic>> get(Request request, String id) async {
+  Map<String, dynamic> get(Request request, String id) {
     try {
       isAuthorized(request);
     } catch (e) {
       return {'error': e.toString()};
     }
-    var item = await service.get(int.parse(id));
+    var item = service<GenericService<T>>().get(int.parse(id));
     return {'item': item};
   }
 
@@ -53,7 +49,7 @@ class GenericController<T> extends ProtectedEndpoint {
         await for (final formData in request.multipartFormData) formData.name: await formData.part.readString(),
       };
       T item = DeserializationResolver().resolve<T>(parameters);
-      service.add(item);
+      service<GenericService<T>>().add(item);
       return Response.ok('Item added');
     } catch (e) {
       return Response.internalServerError(body: 'Error: $e');
@@ -71,7 +67,7 @@ class GenericController<T> extends ProtectedEndpoint {
         await for (final formData in request.multipartFormData) formData.name: await formData.part.readString(),
       };
       T item = DeserializationResolver().resolve<T>(parameters);
-      service.update(item);
+      service<GenericService<T>>().update(item);
       return Response.ok('Item updated');
     } catch (e) {
       return Response.internalServerError(body: 'Error: $e');
@@ -85,7 +81,7 @@ class GenericController<T> extends ProtectedEndpoint {
       return Response.forbidden('Error: $e');
     }
     try {
-      service.remove(int.parse(id));
+      service<GenericService<T>>().remove(int.parse(id));
       return Response.ok('Item removed');
     } catch (e) {
       return Response.internalServerError(body: 'Error: $e');

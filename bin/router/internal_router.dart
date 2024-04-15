@@ -5,6 +5,8 @@ import '../controller/generic_controller.dart';
 import '../model/book.dart';
 import '../model/loan.dart';
 import '../model/user.dart';
+import '../register.dart';
+import '../service/generic_service.dart';
 
 class InternalRouter {
   RouterPlus router;
@@ -34,10 +36,7 @@ class InternalRouter {
     admin.password = 'admin';
     admin.type = 'admin';
 
-    userController.service.add(admin);
-
-    var user = userController.service.get(1);
-    print(user);
+    service<GenericService<User>>().add(admin);
   }
 
   notFound(Request request) {

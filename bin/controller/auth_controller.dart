@@ -11,9 +11,16 @@ class AuthController {
   }
 
   Future<Response> login(Request request) async {
-    final parameters = <String, String>{
-      await for (final formData in request.multipartFormData) formData.name: await formData.part.readString(),
-    };
+    Map<String, String> parameters;
+
+    if (request.isMultipartForm) {
+      parameters = <String, String>{
+        await for (final formData in request.multipartFormData) formData.name: await formData.part.readString(),
+      };
+    } else {
+      print('Request is not multipart');
+      throw Exception('Invalid request');
+    }
 
     final email = parameters['email'];
     final password = parameters['password'];
