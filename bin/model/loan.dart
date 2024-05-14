@@ -16,6 +16,10 @@ class Loan {
     user = service<GenericService<User>>().get(int.parse(json['userId']));
   }
 
+  set userId(int? userId) {}
+
+  set bookId(int? bookId) {}
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;

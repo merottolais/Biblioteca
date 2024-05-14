@@ -15,6 +15,10 @@ dependencies:
   shelf_multipart: ^1.0.0
   crypto: ^3.0.3
   get_it: ^7.6.7
+  mysql1: ^0.20.0
+  flutter:
+    sdk: flutter
+  flutter/material.dart:
 
 dev_dependencies:
   lints: ^3.0.0

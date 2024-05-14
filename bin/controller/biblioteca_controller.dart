@@ -1,15 +1,15 @@
 import 'package:shelf_plus/shelf_plus.dart';
 import 'package:shelf_multipart/form_data.dart';
+import '../midleware/deserialization_resolver.dart';
 import '../midleware/protected_endpoint.dart';
 import '../register.dart';
 import '../service/generic_service.dart';
-import '../midleware/deserialization_resolver.dart';
 
-class GenericController<T> extends ProtectedEndpoint {
+class BibliotecaController<T> extends ProtectedEndpoint {
   String domain;
   RouterPlus router;
 
-  GenericController({required this.domain, required this.router}) {
+  BibliotecaController({required this.domain, required this.router}) {
     router.get('/$domain', getAll);
     router.get('/$domain/<id>', get);
     router.post('/$domain', add);
