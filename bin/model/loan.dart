@@ -1,30 +1,31 @@
-import '../register.dart';
-import '../service/generic_service.dart';
-import 'book.dart';
-import 'user.dart';
-
 class Loan {
-  int id = 0;
-  Book? book;
-  User? user;
+  int? id;
+  int? bookId;
+  int? userId;
 
-  Loan();
+  Loan({
+    this.id,
+    this.bookId,
+    this.userId,
+  });
 
-  Loan.fromJson(Map<String, dynamic> json) {
-    id = int.parse(json['id']);
-    book = service<GenericService<Book>>().get(int.parse(json['bookId']));
-    user = service<GenericService<User>>().get(int.parse(json['userId']));
+  factory Loan.fromJson(Map<String, dynamic> json) {
+    return Loan(
+      id: json['id'],
+      bookId: json['bookId'],
+      userId: json['userId'],
+    );
   }
 
-  set userId(int? userId) {}
+  get book => null;
 
-  set bookId(int? bookId) {}
+  get user => null;
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['book'] = book?.toJson();
-    data['user'] = user?.toJson();
-    return data;
+    return {
+      'id': id,
+      'bookId': bookId,
+      'userId': userId,
+    };
   }
 }

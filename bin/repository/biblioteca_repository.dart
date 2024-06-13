@@ -71,7 +71,7 @@ class BookRepository extends Database {
 
     var result = await connection.query('SELECT * FROM book');
     return result
-        .map((e) => Book()
+        .map((e) => Book(title: '', author: '', description: '')
           ..id = e[0]
           ..title = e[1].toString()
           ..author = e[2].toString()
@@ -92,7 +92,7 @@ class BookRepository extends Database {
     }
 
     return result
-        .map((e) => Book()
+        .map((e) => Book(title: '', author: '', description: '')
           ..id = e[0]
           ..title = e[1].toString()
           ..author = e[2].toString()
@@ -271,7 +271,7 @@ class UserRepository extends Database {
 
     var result = await connection.query('SELECT * FROM user');
     return result
-        .map((e) => User()
+        .map((e) => User(name: '', email: '', password: '', type: '')
           ..id = e[0]
           ..name = e[1].toString()
           ..email = e[2].toString()
@@ -292,7 +292,7 @@ class UserRepository extends Database {
     }
 
     return result
-        .map((e) => User()
+        .map((e) => User(name: '', email: '', password: '', type: '')
           ..id = e[0]
           ..name = e[1].toString()
           ..email = e[2].toString()

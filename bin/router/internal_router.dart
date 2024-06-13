@@ -27,7 +27,7 @@ class InternalRouter {
   }
 
   bootstrap() {
-    User admin = User();
+    User admin = User(name: '', email: '', password: '', type: '');
 
     admin.id = 1;
     admin.name = 'Admin';
